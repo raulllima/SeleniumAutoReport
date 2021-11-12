@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 pathDownload = r"/home/e3/Report//"
 
@@ -18,8 +19,10 @@ options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-driver= webdriver.Chrome(options=options,executable_path=r'./chromedriver')
+pathChrome = Service('./chromedriver')
+driver = webdriver.Chrome(service=pathChrome, options=options)
 driver.get('https://dashboards.flowbix.com/grafana/login')
+print('Please, await...')
 
 
 # Section: Login
@@ -73,19 +76,23 @@ try:
 	checkPort.scan(host, '21-22')
 
 	try:
+		def rename():
+			for item in os.listdir(pathDownload):
+				fileRenamed = 'doc_relatorio_sao-mateus.csv'
+				os.rename(rf'/home/e3/Report/{item}', rf'/home/e3/Report//{fileRenamed}')
+				return fileRenamed
+
 		if(checkPort[host]['tcp'][22]['state'] == "closed"):
 			ftp.connect(host, 21)
 			if ftp.login(user, passw):
-				for item in os.listdir(pathDownload):
-					fileRenamed = 'doc_relatorio_sao-mateus.csv'
-					os.rename(rf'/home/e3/Report/{item}', rf'/home/e3/Report//{fileRenamed}')
-
+				fileRenamed = rename()
 				try:
 					uploadFile = open(rf'/home/e3/Report/{fileRenamed}','rb')
 					ftp.storbinary(rf'STOR {fileRenamed}', uploadFile)
 					uploadFile.close()
 					time.sleep(1)
-    	            #os.remove(r'/home/e3/SeleniumAutoReport/Report/temp//' + fileRenamed)
+
+					os.remove(r'/home/e3/SeleniumAutoReport/Report/temp//' + fileRenamed)
 
 				except Exception as errorUpload:
 					print(errorUpload)
@@ -93,8 +100,9 @@ try:
 			cnopts = pysftp.CnOpts()
 			cnopts.hostkeys = None
 			with pysftp.Connection(host, username=user, password = passw, cnopts=cnopts) as sftp:
-				sftp.cwd(r"/home/arquivos_licknet_2019/geral/NOC/Relátorios/Analises")
-				sftp.put(r"/home/e3/Report/doc_relatorio_sao-mateus.csv")
+				fileRenamed = rename()
+				sftp.cwd(r'/home/arquivos_licknet_2019/geral/NOC/Relátorios/Analises')
+				sftp.put(rf'/home/e3/Report/{fileRenamed}')
 				sftp.close()
 	except Exception as ErroFTP:
 		print(ErroFTP)

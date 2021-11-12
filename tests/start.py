@@ -1,4 +1,6 @@
-from selenium import webdriver
+def teste():
+	bler = 5
+	return bler
 
-driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
-driver.get("http://www.python.org")
+ok = teste()
+print(ok)
