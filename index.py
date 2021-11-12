@@ -19,7 +19,7 @@ options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
-pathChrome = Service('./chromedriver')
+pathChrome = Service('/home/e3/SeleniumAutoReport/chromedriver')
 driver = webdriver.Chrome(service=pathChrome, options=options)
 driver.get('https://dashboards.flowbix.com/grafana/login')
 print('Please, await...')
