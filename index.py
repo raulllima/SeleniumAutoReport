@@ -40,29 +40,38 @@ sendSubmit = driver.find_element(By.XPATH, '/html/body/grafana-app/div/div/react
 # Section: Entering in board
 #
 # Collect board
-time.sleep(10)
+time.sleep(13)
 clickBoard = driver.find_element(By.XPATH, '/html/body/grafana-app/div/div/react-container/div/div[2]/div/div[1]/div/div/div[2]/div/div[1]/div/div[2]/div/plugin-component/panel-plugin-dashlist/grafana-panel/ng-transclude/div/div[1]/div/div[2]/a/div/div').click()
 
+
+# Section: Inspect elements.
 #
-#
-time.sleep(10)
+# Collect button drop button for inspect.
+time.sleep(13)
 clickLabel = driver.find_element(By.XPATH, '/html/body/grafana-app/div/div/react-container/div/div[2]/div/div[1]/div/div[2]/div[12]/div/div[1]/div/div[1]').click()
 
+# Collect button for entering on inspect.
 time.sleep(1)
 clickInspect = driver.find_element(By.XPATH, '/html/body/grafana-app/div/div/react-container/div/div[2]/div/div[1]/div/div[2]/div[12]/div/div[1]/div/div[1]/div/div/div[2]/ul/li[5]').click()
 
+
+# Section: Report
+#
+# Collect button drop data options.
 time.sleep(1)
 clickDataOptions = driver.find_element(By.XPATH, '/html/body/div/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div/div').click()
 
+# Collect option panel style..
 time.sleep(1)
 clickApplyPanel = driver.find_element(By.XPATH, '/html/body/div/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/label').click()
 
+# Collect type download via XPATH.
 time.sleep(1)
 clickDownloadExcelType = driver.find_element(By.XPATH,'/html/body/div/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div/div/div[3]/div/div[2]/div/label').click()
 
+# Collect button download via XPATH.
 time.sleep(1)
 clickDownloadFile = driver.find_element(By.XPATH, '/html/body/div/div/div[2]/div/div[2]/div[1]/div[1]/button').click()
-
 time.sleep(2)
 
 try:
